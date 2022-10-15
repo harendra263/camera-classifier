@@ -24,12 +24,8 @@ class Camera:
             self.camera.release()
 
     def get_frame(self):
-        if self.camera.isOpened():
-            ret, frame = self.camera.read()
-
-            if ret:
-                return (ret, cv.cvtColor(frame, cv.COLOR_BGR2RGB))
-            else:
-                return (ret, None)
-        else:
+        if not self.camera.isOpened():
             return None
+        ret, frame = self.camera.read()
+
+        return (ret, cv.cvtColor(frame, cv.COLOR_BGR2RGB)) if ret else (ret, None)
